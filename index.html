@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sangeeta Bhalla</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Jost',sans-serif;background:#FAF7F2;color:#2C1810}
+a{text-decoration:none}
+
+nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(250,247,242,0.96);backdrop-filter:blur(8px);border-bottom:1px solid #E5DDD4;display:flex;justify-content:space-between;align-items:center;padding:0 48px;height:64px}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;letter-spacing:2px;color:#2C1810}
+.nav-links{display:flex;gap:36px;align-items:center}
+.nav-btn{font-size:12px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;color:#6B6158;cursor:pointer;border:none;border-bottom:1px solid transparent;background:none;padding-bottom:4px;transition:all 0.2s;font-family:'Jost',sans-serif}
+.nav-btn:hover,.nav-btn.active{color:#2C1810;border-bottom-color:#C17B5A}
+.nav-admin{font-size:14px;color:#C0B0A0;cursor:pointer;user-select:none;border:none;background:none}
+
+.page{padding-top:64px;min-height:100vh;display:none}
+.page.active{display:block}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 64px)}
+.about-img-col{background:#E8E0D4;display:flex;align-items:center;justify-content:center}
+.photo-placeholder{width:300px;height:400px;background:linear-gradient(160deg,#D4C8B8,#C0B0A0);border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+.photo-initials{width:80px;height:80px;border-radius:50%;background:#B0A090;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:32px;color:#FAF7F2;font-weight:300}
+.photo-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#9A8A7A}
+.about-content{padding:80px 72px 80px 64px;display:flex;flex-direction:column;justify-content:center}
+.about-tag{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#C17B5A;margin-bottom:24px}
+.about-title{font-family:'Cormorant Garamond',serif;font-size:52px;line-height:1.1;font-weight:300;color:#2C1810;margin-bottom:32px}
+.about-body{font-size:15px;line-height:1.9;color:#5A4E44;font-weight:300}
+.about-body p{margin-bottom:20px}
+.cert-pills{margin-top:40px;display:flex;flex-wrap:wrap;gap:12px}
+.cert-pill{padding:8px 20px;border:1px solid #D4C4B4;border-radius:32px;font-size:12px;letter-spacing:1px;color:#6B6158}
+
+/* SECTION HEADER */
+.section-header{text-align:center;padding:80px 48px 48px}
+.section-tag{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#C17B5A;margin-bottom:16px}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;color:#2C1810}
+.section-sub{font-size:15px;color:#6B6158;margin-top:12px;font-weight:300}
+
+/* VIDEOS */
+.videos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:0 48px 80px}
+.video-card{background:#FFF;border:1px solid #EDE5DA;border-radius:4px;overflow:hidden}
+.video-wrap{position:relative;padding-top:56.25%;background:#111}
+.video-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
+.video-meta{padding:16px 20px}
+.video-title{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:400;color:#2C1810;margin-bottom:6px}
+.video-desc{font-size:13px;color:#8A7C70;font-weight:300;line-height:1.6}
+
+/* BLOG */
+.blog-controls{display:flex;justify-content:space-between;align-items:center;padding:0 48px 40px}
+#search-input{width:360px;padding:12px 20px;border:1px solid #DDD4C8;border-radius:2px;background:#FFF;font-family:'Jost',sans-serif;font-size:14px;color:#2C1810;outline:none}
+#search-input:focus{border-color:#C17B5A}
+.post-count{font-size:13px;color:#9A8C7E;letter-spacing:1px}
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;padding:0 48px 80px}
+.blog-card{background:#FFF;border:1px solid #EDE5DA;border-radius:2px;padding:32px 28px;cursor:pointer;transition:border-color 0.2s,box-shadow 0.2s}
+.blog-card:hover{border-color:#C17B5A;box-shadow:0 4px 24px rgba(193,123,90,0.08)}
+.blog-date{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#C17B5A;margin-bottom:12px}
+.blog-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;color:#2C1810;margin-bottom:12px;line-height:1.3}
+.blog-excerpt{font-size:14px;color:#6B6158;line-height:1.7;font-weight:300}
+.tag-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.tag{font-size:11px;padding:4px 12px;background:#F2EBE2;color:#8A7060;border-radius:16px}
+.no-posts{text-align:center;padding:80px;color:#9A8C7E;font-size:20px;font-family:'Cormorant Garamond',serif;font-style:italic}
+
+/* BLOG DETAIL */
+#blog-detail{display:none;max-width:720px;margin:0 auto;padding:60px 32px 100px}
+.back-btn{font-size:13px;color:#C17B5A;cursor:pointer;letter-spacing:1px;margin-bottom:40px;display:inline-block;background:none;border:none;font-family:'Jost',sans-serif}
+.detail-date{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#9A8C7E;margin-bottom:16px;margin-top:24px}
+.detail-title{font-family:'Cormorant Garamond',serif;font-size:46px;font-weight:300;line-height:1.15;color:#2C1810;margin-bottom:40px}
+.detail-body{font-size:16px;line-height:1.95;color:#4A3E35;font-weight:300}
+.detail-body p{margin-bottom:24px}
+
+/* MEDITATION */
+.meditation-wrap{max-width:580px;margin:0 auto;padding:0 32px 80px}
+.form-group{margin-bottom:24px}
+.form-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#8A7C70;margin-bottom:10px;display:block}
+.form-input,.form-select,.form-textarea{width:100%;padding:14px 18px;border:1px solid #DDD4C8;border-radius:2px;background:#FFF;font-family:'Jost',sans-serif;font-size:15px;color:#2C1810;outline:none;transition:border-color 0.2s}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:#C17B5A}
+.form-textarea{resize:vertical;min-height:100px}
+.submit-btn{width:100%;padding:16px;background:#2C1810;color:#FAF7F2;border:none;border-radius:2px;font-family:'Jost',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background 0.2s;margin-top:8px}
+.submit-btn:hover{background:#C17B5A}
+.success-box{text-align:center;padding:48px 40px;background:#F2EBE2;border-radius:2px}
+.success-title{font-family:'Cormorant Garamond',serif;font-size:28px;color:#5A3D28;margin-bottom:16px}
+.success-body{font-size:15px;color:#6B5848;line-height:1.7;font-weight:300}
+
+/* ADMIN PANEL */
+#admin-panel{position:fixed;top:64px;right:-500px;bottom:0;width:480px;background:#FFF;border-left:1px solid #E5DDD4;z-index:300;overflow-y:auto;padding:32px;box-shadow:-8px 0 32px rgba(44,24,16,0.08);transition:right 0.3s ease}
+#admin-panel.open{right:0}
+.admin-close{position:absolute;top:24px;right:24px;background:none;border:none;font-size:22px;cursor:pointer;color:#8A7C70}
+.admin-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;margin-bottom:6px;color:#2C1810}
+.admin-sub{font-size:13px;color:#9A8C7E;margin-bottom:32px}
+.admin-input{width:100%;padding:12px 16px;border:1px solid #DDD4C8;border-radius:2px;font-family:'Jost',sans-serif;font-size:14px;color:#2C1810;outline:none;margin-bottom:12px}
+.admin-input:focus{border-color:#C17B5A}
+.admin-btn{padding:12px 32px;background:#2C1810;color:#FAF7F2;border:none;border-radius:2px;font-family:'Jost',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer}
+.admin-btn:hover{background:#C17B5A}
+.admin-btn-full{width:100%;padding:14px}
+.admin-error{font-size:13px;color:#C17B5A;margin-bottom:12px}
+.admin-hint{margin-top:16px;font-size:12px;color:#B0A090}
+.divider{height:1px;background:#EDE5DA;margin:32px 0}
+.admin-section-title{font-family:'Cormorant Garamond',serif;font-size:20px;color:#2C1810;margin-bottom:16px;font-weight:400}
+.admin-post-item{display:flex;justify-content:space-between;align-items:flex-start;padding:12px 0;border-bottom:1px solid #F2EBE2}
+.admin-post-info{}
+.admin-post-name{font-size:14px;color:#2C1810;line-height:1.4}
+.admin-post-date{font-size:11px;color:#9A8C7E;margin-top:4px}
+.delete-btn{font-size:11px;color:#C17B5A;background:none;border:none;cursor:pointer;letter-spacing:1px;white-space:nowrap;margin-left:16px;margin-top:2px;font-family:'Jost',sans-serif}
+.char-count{font-size:11px;color:#9A8C7E;text-align:right;margin-top:4px}
+.saved-msg{background:#F2EBE2;padding:12px 16px;border-radius:2px;font-size:13px;color:#5A3D28;margin-bottom:20px;display:none}
+.saved-msg.show{display:block}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Sangeeta Bhalla</div>
+  <div class="nav-links">
+    <button class="nav-btn active" onclick="showPage('about')">About</button>
+    <button class="nav-btn" onclick="showPage('videos')">Videos</button>
+    <button class="nav-btn" onclick="showPage('blog')">Blog</button>
+    <button class="nav-btn" onclick="showPage('meditation')">Meditation</button>
+    <button class="nav-admin" onclick="toggleAdmin()">✦</button>
+  </div>
+</nav>
+
+<!-- ABOUT -->
+<div id="page-about" class="page active">
+  <div class="about-grid">
+    <div class="about-img-col">
+      <div class="photo-placeholder">
+        <div class="photo-initials">SB</div>
+        <div class="photo-label">Photo</div>
+      </div>
+    </div>
+    <div class="about-content">
+      <div class="about-tag">Holistic Healer · Practitioner · Teacher</div>
+      <div class="about-title">Healing is not<br>an event.<br><em>It is a return.</em></div>
+      <div class="about-body">
+        <p>Sangeeta Bhalla is a certified Ayurvedic practitioner, crystal healer, and meditation teacher with over two decades of practice. Her work bridges the ancient and the immediate — drawing from classical texts while remaining grounded in the lived experience of her clients.</p>
+        <p>She is the co-founder of Anugnya Holistic Care, a sanctuary for integrative wellness in Hyderabad, and the creator of the 3000 BC Therapeutics line of Ayurvedic formulations.</p>
+        <p>Her sessions are an invitation — not to fix, but to listen. To the body's intelligence. To the wisdom that already lives within you.</p>
+      </div>
+      <div class="cert-pills">
+        <span class="cert-pill">Ayurveda</span>
+        <span class="cert-pill">Crystal Healing</span>
+        <span class="cert-pill">Meditation</span>
+        <span class="cert-pill">Integrative Wellness</span>
+        <span class="cert-pill">Anugnya Holistic Care</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VIDEOS -->
+<div id="page-videos" class="page">
+  <div class="section-header">
+    <div class="section-tag">Teachings</div>
+    <div class="section-title">Watch &amp; Learn</div>
+    <div class="section-sub">Conversations, guided practices, and insights from Sangeeta's work.</div>
+  </div>
+  <div class="videos-grid">
+    <div class="video-card">
+      <div class="video-wrap">
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Video 1"></iframe>
+      </div>
+      <div class="video-meta">
+        <div class="video-title">Introduction to Ayurvedic Healing</div>
+        <div class="video-desc">An exploration of Ayurveda's foundational principles and how they apply to modern life.</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="video-wrap">
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Video 2"></iframe>
+      </div>
+      <div class="video-meta">
+        <div class="video-title">Crystal Healing: A Practitioner's Guide</div>
+        <div class="video-desc">Understanding crystal energy and how to work with it safely and effectively.</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="video-wrap">
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Video 3"></iframe>
+      </div>
+      <div class="video-meta">
+        <div class="video-title">Daily Meditation Practice</div>
+        <div class="video-desc">A guided session for beginners and experienced practitioners alike.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BLOG -->
+<div id="page-blog" class="page">
+  <div class="section-header">
+    <div class="section-tag">Writing</div>
+    <div class="section-title">Reflections &amp; Insights</div>
+  </div>
+  <div class="blog-controls">
+    <input id="search-input" type="text" placeholder="Search by title, topic or tag..." oninput="filterPosts()">
+    <span class="post-count" id="post-count">3 posts</span>
+  </div>
+  <div id="blog-grid" class="blog-grid"></div>
+  <div id="no-posts" class="no-posts" style="display:none">No posts found.</div>
+  <div id="blog-detail">
+    <button class="back-btn" onclick="closeBlogDetail()">← All Posts</button>
+    <div class="detail-date" id="detail-date"></div>
+    <div class="detail-title" id="detail-title"></div>
+    <div class="detail-body" id="detail-body"></div>
+    <div class="tag-list" id="detail-tags"></div>
+  </div>
+</div>
+
+<!-- MEDITATION -->
+<div id="page-meditation" class="page">
+  <div class="section-header">
+    <div class="section-tag">Join a Session</div>
+    <div class="section-title">Meditation with Sangeeta</div>
+    <div class="section-sub" style="max-width:480px;margin:12px auto 0">Online and in-person sessions. Small groups. A safe space for beginners and those returning to practice.</div>
+  </div>
+  <div class="meditation-wrap">
+    <div id="med-form-wrap">
+      <form onsubmit="submitMedForm(event)">
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input class="form-input" type="text" id="med-name" required placeholder="As you'd like to be addressed">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input class="form-input" type="email" id="med-email" required placeholder="For session confirmation">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input class="form-input" type="tel" id="med-phone" required placeholder="WhatsApp preferred">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Session Preference</label>
+          <select class="form-select" id="med-session" required>
+            <option value="">Select a format</option>
+            <option value="online-group">Online Group Session</option>
+            <option value="online-individual">Online Individual Session</option>
+            <option value="inperson">In-Person (Hyderabad)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Anything you'd like Sangeeta to know</label>
+          <textarea class="form-textarea" id="med-note" placeholder="Experience level, intentions, health context..."></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Register Interest</button>
+      </form>
+    </div>
+    <div id="med-success" class="success-box" style="display:none">
+      <div class="success-title" id="success-name"></div>
+      <div class="success-body">Your interest has been received. Sangeeta will reach out within two working days to confirm your session details.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="admin-panel">
+  <button class="admin-close" onclick="toggleAdmin()">×</button>
+  <div class="admin-title">Blog Admin</div>
+  <div class="admin-sub">Password protected. Visible only to you.</div>
+  <div id="admin-login">
+    <label class="form-label">Password</label>
+    <input class="admin-input" type="password" id="admin-pass" placeholder="Enter password" onkeydown="if(event.key==='Enter')adminLogin()">
+    <div class="admin-error" id="admin-error" style="display:none">Incorrect password.</div>
+    <button class="admin-btn" onclick="adminLogin()">Unlock</button>
+    <div class="admin-hint">Demo password: sangeeta123</div>
+  </div>
+  <div id="admin-content" style="display:none">
+    <div class="saved-msg" id="saved-msg">Post published successfully.</div>
+    <div class="admin-section-title">New Post</div>
+    <label class="form-label" style="margin-top:0">Title</label>
+    <input class="admin-input" type="text" id="new-title" placeholder="Post title">
+    <label class="form-label">Tags (comma separated)</label>
+    <input class="admin-input" type="text" id="new-tags" placeholder="ayurveda, healing, meditation">
+    <label class="form-label">Body</label>
+    <textarea class="admin-input" id="new-body" rows="10" placeholder="Write your post here. Separate paragraphs with a blank line." oninput="document.getElementById('char-count').textContent=this.value.length+' characters'"></textarea>
+    <div class="char-count" id="char-count">0 characters</div>
+    <button class="admin-btn admin-btn-full" style="margin-top:12px" onclick="publishPost()">Publish Post</button>
+    <div class="divider"></div>
+    <div class="admin-section-title">Published (<span id="pub-count">3</span>)</div>
+    <div id="admin-post-list"></div>
+  </div>
+</div>
+
+<script>
+var posts = [
+  {id:1,title:"The Language of the Body in Ayurvedic Healing",date:"10 April 2026",excerpt:"Ayurveda teaches us that every symptom is a conversation — the body speaking in the only language it knows. Learning to listen changes everything.",body:"Ayurveda teaches us that every symptom is a conversation — the body speaking in the only language it knows. Learning to listen changes everything.\n\nWhen we approach discomfort not as an enemy but as a messenger, healing shifts from battle to collaboration. The art of Ayurvedic practice lies in reading these messages with patience and without judgment.\n\nPrakriti — one's constitutional nature — is not a fixed limitation but a map. A map of tendencies, vulnerabilities, and gifts that, once understood, becomes the most powerful tool for sustained wellbeing.\n\nIn my practice, I have found that the first session is rarely about treatment. It is about listening. To the client's story, yes — but also to what remains unsaid, to the body's posture, the quality of speech, the rhythm of breath.",tags:["ayurveda","healing","body"]},
+  {id:2,title:"Crystal Energy and the Subtle Body",date:"28 March 2026",excerpt:"Crystals are not magic. They are geometry made visible — ancient patterns of earth that resonate with the patterns within us.",body:"Crystals are not magic. They are geometry made visible — ancient patterns of earth that resonate with the patterns within us.\n\nEvery crystal carries a specific molecular structure that vibrates at a consistent frequency. When placed near the body's energy field, this consistency acts as a reference point — a tuning fork for tissues that have fallen out of their natural rhythm.\n\nAmethyst works with the crown and third eye. Rose quartz opens the heart. Black tourmaline grounds excess energy that the nervous system cannot process. These are not metaphors — they are working hypotheses that thousands of practitioners and their clients have tested across centuries.\n\nI do not ask you to believe. I ask only that you remain open while we observe.",tags:["crystals","energy","healing"]},
+  {id:3,title:"What Meditation Actually Does",date:"15 March 2026",excerpt:"After twenty years of practice and teaching, here is the most honest thing I can say about meditation: it does not empty the mind. It changes your relationship to it.",body:"After twenty years of practice and teaching, here is the most honest thing I can say about meditation: it does not empty the mind. It changes your relationship to it.\n\nThe mind will always produce thought. Expecting otherwise is like standing at the ocean's edge and asking the waves to stop. The practice is not suppression — it is the gentle, repeated return. Again. And again. And again.\n\nThis repeated return is what builds the muscle. Not the stillness between thoughts, but the noticing of distraction and the unhurried choice to come back. That choice, made ten thousand times, becomes a quality of presence that eventually permeates ordinary life.\n\nThis is why meditators seem calmer. Not because they feel less — often they feel more — but because they have learned to meet experience without immediately needing to change it.",tags:["meditation","mindfulness","practice"]}
+];
+var nextId = 4;
+
+function showPage(name){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+  document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active')});
+  document.getElementById('page-'+name).classList.add('active');
+  event.target.classList.add('active');
+  if(name==='blog'){renderBlog();closeBlogDetailView()}
+}
+
+function renderBlog(){
+  var q=document.getElementById('search-input').value.toLowerCase();
+  var filtered=posts.filter(function(p){
+    return p.title.toLowerCase().includes(q)||p.excerpt.toLowerCase().includes(q)||p.tags.some(function(t){return t.includes(q)})
+  });
+  var grid=document.getElementById('blog-grid');
+  var noP=document.getElementById('no-posts');
+  document.getElementById('post-count').textContent=filtered.length+' post'+(filtered.length!==1?'s':'');
+  if(filtered.length===0){grid.style.display='none';noP.style.display='block';noP.textContent='No posts found for "'+document.getElementById('search-input').value+'"';return}
+  noP.style.display='none';grid.style.display='grid';
+  grid.innerHTML=filtered.map(function(p){
+    return '<div class="blog-card" onclick="openPost('+p.id+')"><div class="blog-date">'+p.date+'</div><div class="blog-title">'+p.title+'</div><div class="blog-excerpt">'+p.excerpt+'</div><div class="tag-list">'+p.tags.map(function(t){return '<span class="tag">'+t+'</span>'}).join('')+'</div></div>'
+  }).join('');
+}
+
+function filterPosts(){renderBlog()}
+
+function openPost(id){
+  var p=posts.find(function(x){return x.id===id});
+  if(!p)return;
+  document.getElementById('blog-grid').style.display='none';
+  document.querySelector('.blog-controls').style.display='none';
+  document.querySelector('#page-blog .section-header').style.display='none';
+  document.getElementById('no-posts').style.display='none';
+  var det=document.getElementById('blog-detail');
+  det.style.display='block';
+  document.getElementById('detail-date').textContent=p.date;
+  document.getElementById('detail-title').textContent=p.title;
+  document.getElementById('detail-body').innerHTML=p.body.split('\n\n').map(function(para){return '<p>'+para+'</p>'}).join('');
+  document.getElementById('detail-tags').innerHTML=p.tags.map(function(t){return '<span class="tag">'+t+'</span>'}).join('');
+}
+
+function closeBlogDetail(){closeBlogDetailView();renderBlog()}
+function closeBlogDetailView(){
+  document.getElementById('blog-detail').style.display='none';
+  var bc=document.querySelector('.blog-controls');
+  var sh=document.querySelector('#page-blog .section-header');
+  if(bc)bc.style.display='flex';
+  if(sh)sh.style.display='block';
+}
+
+function submitMedForm(e){
+  e.preventDefault();
+  var name=document.getElementById('med-name').value;
+  document.getElementById('med-form-wrap').style.display='none';
+  document.getElementById('med-success').style.display='block';
+  document.getElementById('success-name').textContent='Thank you, '+name+'.';
+}
+
+function toggleAdmin(){
+  var p=document.getElementById('admin-panel');
+  p.classList.toggle('open');
+}
+
+function adminLogin(){
+  var pass=document.getElementById('admin-pass').value;
+  var err=document.getElementById('admin-error');
+  if(pass==='sangeeta123'){
+    document.getElementById('admin-login').style.display='none';
+    document.getElementById('admin-content').style.display='block';
+    renderAdminList();
+  } else {
+    err.style.display='block';
+  }
+}
+
+function publishPost(){
+  var title=document.getElementById('new-title').value.trim();
+  var body=document.getElementById('new-body').value.trim();
+  var tags=document.getElementById('new-tags').value;
+  if(!title||!body)return;
+  var tagList=tags.split(',').map(function(t){return t.trim().toLowerCase()}).filter(Boolean);
+  var now=new Date();
+  var months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var dateStr=now.getDate()+' '+months[now.getMonth()]+' '+now.getFullYear();
+  posts.unshift({id:nextId++,title:title,date:dateStr,excerpt:body.slice(0,160)+'...',body:body,tags:tagList});
+  document.getElementById('new-title').value='';
+  document.getElementById('new-body').value='';
+  document.getElementById('new-tags').value='';
+  document.getElementById('char-count').textContent='0 characters';
+  var msg=document.getElementById('saved-msg');
+  msg.classList.add('show');
+  setTimeout(function(){msg.classList.remove('show')},3000);
+  renderAdminList();
+}
+
+function renderAdminList(){
+  document.getElementById('pub-count').textContent=posts.length;
+  var list=document.getElementById('admin-post-list');
+  list.innerHTML=posts.map(function(p){
+    return '<div class="admin-post-item"><div class="admin-post-info"><div class="admin-post-name">'+p.title+'</div><div class="admin-post-date">'+p.date+'</div></div><button class="delete-btn" onclick="deletePost('+p.id+')">Remove</button></div>'
+  }).join('');
+}
+
+function deletePost(id){
+  if(!confirm('Delete this post?'))return;
+  posts=posts.filter(function(p){return p.id!==id});
+  renderAdminList();
+  renderBlog();
+}
+
+renderBlog();
+</script>
+</body>
+</html>
