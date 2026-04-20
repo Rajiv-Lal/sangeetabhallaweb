@@ -2,20 +2,20 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Sangeeta Bhalla — Energy Healer & Founder, Hyderabad</title>
-<meta name="description" content="Cancer survivor, energy healer, and meditation teacher. Founder of 3000 BC Therapeutics and Anugnya Holistic Care, Hyderabad.">
+<title>Videos — Sangeeta Bhalla</title>
+<meta name="description" content="Watch Sangeeta Bhalla share insights on energy healing, meditation, crystal healing and holistic wellness.">
 <meta name="keywords" content="Sangeeta Bhalla, energy healer, Hyderabad, crystal healing, meditation, ayurveda, holistic care, cancer recovery">
 <meta name="author" content="Sangeeta Bhalla">
-<meta property="og:title" content="Sangeeta Bhalla — Energy Healer & Founder, Hyderabad">
-<meta property="og:description" content="Cancer survivor, energy healer, and meditation teacher. Founder of 3000 BC Therapeutics and Anugnya Holistic Care, Hyderabad.">
+<meta property="og:title" content="Videos — Sangeeta Bhalla">
+<meta property="og:description" content="Watch Sangeeta Bhalla share insights on energy healing, meditation, crystal healing and holistic wellness.">
 <meta property="og:image" content="https://res.cloudinary.com/ddtj7h91r/image/upload/v1776528989/3_ry5hqz.png">
-<meta property="og:url" content="https://sangeetabhalla.net/index.html">
+<meta property="og:url" content="https://sangeetabhalla.net/videos.html">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Sangeeta Bhalla — Energy Healer & Founder, Hyderabad">
-<meta name="twitter:description" content="Cancer survivor, energy healer, and meditation teacher. Founder of 3000 BC Therapeutics and Anugnya Holistic Care, Hyderabad.">
+<meta name="twitter:title" content="Videos — Sangeeta Bhalla">
+<meta name="twitter:description" content="Watch Sangeeta Bhalla share insights on energy healing, meditation, crystal healing and holistic wellness.">
 <meta name="twitter:image" content="https://res.cloudinary.com/ddtj7h91r/image/upload/v1776528989/3_ry5hqz.png">
-<link rel="canonical" href="https://sangeetabhalla.net/index.html">
+<link rel="canonical" href="https://sangeetabhalla.net/videos.html">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 
@@ -114,86 +114,65 @@ footer a:hover{color:#FAF7F2}
   #admin-panel{width:100%;right:-100%}
 }
 
-.about-grid{display:grid;grid-template-columns:1fr 2fr;min-height:calc(100vh - 64px)}
-.about-img-col{background:#E8E0D4;overflow:hidden}
-.about-img-col img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
-.about-content{padding:64px 72px 48px 56px;display:flex;flex-direction:column;justify-content:center}
-.about-tag{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#C17B5A;margin-bottom:20px}
-.about-quote{font-family:'Cormorant Garamond',serif;font-size:23px;line-height:1.5;font-weight:300;font-style:italic;color:#2C1810;margin-bottom:10px;padding-left:20px;border-left:2px solid #C17B5A}
-.about-attrib{padding-left:20px;margin-bottom:28px}
-.attrib-name{font-size:13px;font-weight:500;color:#2C1810}
-.attrib-role{font-size:12px;color:#9A8C7E;font-weight:300}
-.about-body{font-size:15px;line-height:1.9;color:#5A4E44;font-weight:300}
-.about-body p{margin-bottom:16px}
-.cert-pills{margin-top:28px;display:flex;flex-wrap:wrap;gap:10px}
-.cert-pill{padding:7px 18px;border:1px solid #C17B5A;border-radius:32px;font-size:12px;letter-spacing:1px;color:#C17B5A;cursor:pointer;transition:all 0.2s;background:none;font-family:'Jost',sans-serif}
-.cert-pill:hover{background:#C17B5A;color:#FFF}
-.press-row{margin-top:24px;border-top:1px solid #E5DDD4;padding-top:18px}
-.press-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#9A8C7E;margin-bottom:8px}
-.press-items{font-size:13px;color:#8A7C70;font-weight:300}
-.warm-banner{background:#F2EBE2;padding:56px 64px}
-.warm-banner-title{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:300;color:#2C1810;margin-bottom:8px}
-.warm-banner-sub{font-size:14px;color:#8A7060;font-weight:300;margin-bottom:32px}
+.videos-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;padding:0 48px 80px}
+.video-card{background:#FFF;border:1px solid #EDE5DA;border-radius:4px;overflow:hidden;cursor:pointer;transition:border-color 0.2s}
+.video-card:hover{border-color:#C17B5A}
+.video-thumb{position:relative;padding-top:56.25%;background:#1a1a1a;overflow:hidden}
+.video-thumb img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;transition:opacity 0.2s}
+.video-card:hover .video-thumb img{opacity:0.8}
+.play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;background:rgba(193,123,90,0.92);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.play-arrow{width:0;height:0;border-left:22px solid #FFF;border-top:12px solid transparent;border-bottom:12px solid transparent;margin-left:6px}
+.video-meta{padding:16px 20px}
+.video-title{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:400;color:#2C1810;margin-bottom:6px}
+.video-desc{font-size:13px;color:#8A7C70;font-weight:300;line-height:1.6}
+.video-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:500;align-items:center;justify-content:center}
+.video-modal.open{display:flex}
+.video-modal-inner{width:82%;max-width:960px;position:relative}
+.video-modal-close{position:absolute;top:-44px;right:0;background:none;border:none;color:#FFF;font-size:32px;cursor:pointer;line-height:1;padding:4px}
+.video-modal-wrap{position:relative;padding-top:56.25%;background:#000}
+.video-modal-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
 @media(max-width:768px){
-  .about-grid{grid-template-columns:1fr}
-  .about-img-col{height:300px}
-  .about-content{padding:32px 20px}
-  .warm-banner{padding:36px 20px}
-  .warm-banner-title{font-size:26px}
-  .about-quote{font-size:19px}
-  .cert-pills{gap:8px}
-  .cert-pill{font-size:11px;padding:6px 14px}
+  .videos-grid{grid-template-columns:1fr;padding:0 16px 48px}
+  .video-modal-inner{width:96%}
 }
 </style>
 </head>
 <body>
 <nav>
   <a class="nav-logo" href="index.html">Sangeeta Bhalla</a>
-  <div class="nav-links"><a class="nav-a active" href="index.html">About</a><a class="nav-a" href="videos.html">Videos</a><a class="nav-a" href="blog.html">Blog</a><a class="nav-a" href="meditation.html">Meditation</a><button class="nav-admin" onclick="toggleAdmin()">✦</button></div>
+  <div class="nav-links"><a class="nav-a" href="index.html">About</a><a class="nav-a active" href="videos.html">Videos</a><a class="nav-a" href="blog.html">Blog</a><a class="nav-a" href="meditation.html">Meditation</a><button class="nav-admin" onclick="toggleAdmin()">✦</button></div>
   <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
 </nav>
-<div class="mobile-menu" id="mobile-menu"><a class="mobile-nav-a active" href="index.html">About</a><a class="mobile-nav-a" href="videos.html">Videos</a><a class="mobile-nav-a" href="blog.html">Blog</a><a class="mobile-nav-a" href="meditation.html">Meditation</a></div>
+<div class="mobile-menu" id="mobile-menu"><a class="mobile-nav-a" href="index.html">About</a><a class="mobile-nav-a active" href="videos.html">Videos</a><a class="mobile-nav-a" href="blog.html">Blog</a><a class="mobile-nav-a" href="meditation.html">Meditation</a></div>
 <div class="page-wrap">
-  <div class="about-grid">
-    <div class="about-img-col"><img src="https://res.cloudinary.com/ddtj7h91r/image/upload/v1776528989/3_ry5hqz.png" alt="Sangeeta Bhalla — Energy Healer"></div>
-    <div class="about-content">
-      <div class="about-tag">Cancer Survivor · Energy Healer · Energy Healing Teacher · Founder</div>
-      <div class="about-quote">"Healing, Counselling and Sleep Easy helped me. I was able to overcome my grief and get control of my emotions."</div>
-      <div class="about-attrib"><div class="attrib-name">Mythri</div><div class="attrib-role">Corporate Executive, Widowed at 32</div></div>
-      <div class="about-body">
-        <p>Sangeeta Bhalla is a cancer survivor, energy healer, and aromatherapist based in Hyderabad. Her path into healing began with her own recovery from radical surgery — a journey in which therapeutic energy healing proved transformative. What started as a personal necessity became a decade-long study and practice that gave her the tools to heal herself, and eventually others.</p>
-        <p>She is the founder of 3000 BC Therapeutics and co-founder of Anugnya Holistic Care, where she works with cancer patients and caregivers to complement medical treatment with ancient healing wisdom.</p>
-      </div>
-      <div class="cert-pills">
-        <button class="cert-pill" onclick="scrollToForm()">Therapeutic Energy Healing</button>
-        <button class="cert-pill" onclick="scrollToForm()">Energy Aromatherapy</button>
-        <button class="cert-pill" onclick="scrollToForm()">Meditation</button>
-        <button class="cert-pill" onclick="scrollToForm()">Crystal Healing</button>
-        <button class="cert-pill" onclick="scrollToForm()">Energy Psychotherapy</button>
-      </div>
-      <div class="press-row"><div class="press-label">As featured in</div><div class="press-items">Times of India &nbsp;·&nbsp; Eenadu &nbsp;·&nbsp; MysticMag</div></div>
+  <div class="section-header">
+    <div class="section-tag">Teachings</div>
+    <div class="section-title">Watch &amp; Learn</div>
+    <div class="section-sub">Conversations, guided practices, and insights from Sangeeta's work.</div>
+  </div>
+  <div class="videos-grid">
+    <div class="video-card" onclick="openVideo('E9UeBIiH9RE')">
+      <div class="video-thumb"><img src="https://img.youtube.com/vi/E9UeBIiH9RE/maxresdefault.jpg" alt="The Founder's Motivation"><div class="play-btn"><div class="play-arrow"></div></div></div>
+      <div class="video-meta"><div class="video-title">The Founder's Motivation</div><div class="video-desc">Why Sangeeta started this journey and what drives her work today.</div></div>
+    </div>
+    <div class="video-card" onclick="openVideo('eDUDrgcb9pI')">
+      <div class="video-thumb"><img src="https://img.youtube.com/vi/eDUDrgcb9pI/maxresdefault.jpg" alt="Energy Healing in Practice"><div class="play-btn"><div class="play-arrow"></div></div></div>
+      <div class="video-meta"><div class="video-title">Energy Healing in Practice</div><div class="video-desc">An introduction to therapeutic energy healing alongside medical treatment.</div></div>
+    </div>
+    <div class="video-card" onclick="openVideo('tiJis6DqiV0')">
+      <div class="video-thumb"><img src="https://img.youtube.com/vi/tiJis6DqiV0/maxresdefault.jpg" alt="Becoming Well Again"><div class="play-btn"><div class="play-arrow"></div></div></div>
+      <div class="video-meta"><div class="video-title">Becoming Well Again</div><div class="video-desc">Stories of recovery and the role of holistic care in the healing journey.</div></div>
+    </div>
+    <div class="video-card" onclick="openVideo('TNYVxzTTV3A')">
+      <div class="video-thumb"><img src="https://img.youtube.com/vi/TNYVxzTTV3A/maxresdefault.jpg" alt="Ancient Wisdom Modern Healing"><div class="play-btn"><div class="play-arrow"></div></div></div>
+      <div class="video-meta"><div class="video-title">Ancient Wisdom, Modern Healing</div><div class="video-desc">How 5000-year-old healing traditions are adapted to support modern lives.</div></div>
     </div>
   </div>
-  <div class="warm-banner" id="about-form-section">
-    <div class="warm-banner-title">Begin Your Healing Journey</div>
-    <div class="warm-banner-sub">Tell Sangeeta what you are interested in and she will reach out personally.</div>
-    <div class="form-row">
-      <div><label class="form-label">Your Name</label><input class="form-input" type="text" id="about-name" placeholder="As you'd like to be addressed"></div>
-      <div><label class="form-label">Phone / WhatsApp</label><input class="form-input" type="tel" id="about-phone" placeholder="WhatsApp preferred"></div>
-    </div>
-    <label class="form-label">What are you interested in? (select all that apply)</label>
-    <div class="checkbox-group">
-      <label class="checkbox-item"><input type="checkbox" id="about-meditation"><span>Wellness Meditation</span></label>
-      <label class="checkbox-item"><input type="checkbox" id="about-crystal"><span>Crystal Healing</span></label>
-      <label class="checkbox-item"><input type="checkbox" id="about-energy"><span>Energy Healing</span></label>
-      <label class="checkbox-item"><input type="checkbox" id="about-psychotherapy"><span>Energy Psychotherapy</span></label>
-      <label class="checkbox-item"><input type="checkbox" id="about-free"><span>Free Healing Session</span></label>
-    </div>
-    <label class="form-label" style="margin-bottom:8px">Anything you'd like Sangeeta to know</label>
-    <textarea class="form-textarea" id="about-comments" placeholder="Your situation, questions, or intentions..." style="margin-bottom:20px"></textarea>
-    <button class="submit-btn" id="about-submit-btn" onclick="submitForm('about')">Send to Sangeeta</button>
-    <div class="form-status" id="about-status"></div>
-    <div class="form-success" id="about-success">Thank you. Sangeeta will be in touch with you shortly.</div>
+</div>
+<div class="video-modal" id="video-modal" onclick="closeVideoOverlay(event)">
+  <div class="video-modal-inner">
+    <button class="video-modal-close" onclick="closeVideo()">×</button>
+    <div class="video-modal-wrap"><iframe id="video-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
   </div>
 </div>
 <footer>
@@ -347,6 +326,9 @@ async function deletePost(id){
   }catch(e){alert('Could not delete. Try again.');}
 }
 
-function scrollToForm(){document.getElementById('about-form-section').scrollIntoView({behavior:'smooth',block:'start'})}
+function openVideo(id){document.getElementById('video-iframe').src='https://www.youtube.com/embed/'+id+'?autoplay=1';document.getElementById('video-modal').classList.add('open');document.body.style.overflow='hidden'}
+function closeVideoOverlay(e){if(e.target===document.getElementById('video-modal'))closeVideo()}
+function closeVideo(){document.getElementById('video-modal').classList.remove('open');document.getElementById('video-iframe').src='';document.body.style.overflow=''}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeVideo()});
 </script>
 </body></html>
