@@ -114,6 +114,25 @@ footer a:hover{color:#FAF7F2}
   #admin-panel{width:100%;right:-100%}
 }
 
+
+.subscribe-bar{background:#F2EBE2;padding:40px 48px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap}
+.subscribe-text{}
+.subscribe-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:#2C1810;margin-bottom:6px}
+.subscribe-sub{font-size:14px;color:#8A7060;font-weight:300}
+.subscribe-form{display:flex;gap:12px;flex-wrap:wrap}
+.subscribe-input{padding:13px 18px;border:1px solid #DDD4C8;border-radius:2px;background:#FFF;font-family:'Jost',sans-serif;font-size:14px;color:#2C1810;outline:none;transition:border-color 0.2s;width:280px}
+.subscribe-input:focus{border-color:#C17B5A}
+.subscribe-btn{padding:13px 28px;background:#2C1810;color:#FAF7F2;border:none;border-radius:2px;font-family:'Jost',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background 0.2s;white-space:nowrap}
+.subscribe-btn:hover{background:#C17B5A}
+.subscribe-btn:disabled{background:#C0B0A0;cursor:default}
+.subscribe-success{font-size:14px;color:#3A5A28;display:none;padding:13px 0}
+.subscribe-status{font-size:13px;color:#C17B5A;padding:6px 0;display:none}
+@media(max-width:768px){
+  .subscribe-bar{padding:32px 20px;flex-direction:column;align-items:flex-start}
+  .subscribe-form{flex-direction:column;width:100%}
+  .subscribe-input{width:100%}
+  .subscribe-btn{width:100%}
+}
 .blog-controls{display:flex;justify-content:space-between;align-items:center;padding:0 48px 40px;flex-wrap:wrap;gap:12px}
 #search-input{width:360px;max-width:100%;padding:12px 20px;border:1px solid #DDD4C8;border-radius:2px;background:#FFF;font-family:'Jost',sans-serif;font-size:14px;color:#2C1810;outline:none}
 #search-input:focus{border-color:#C17B5A}
@@ -131,13 +150,14 @@ footer a:hover{color:#FAF7F2}
 .tag{font-size:11px;padding:4px 12px;background:#F2EBE2;color:#8A7060;border-radius:16px}
 .no-posts{text-align:center;padding:80px;color:#9A8C7E;font-size:20px;font-family:'Cormorant Garamond',serif;font-style:italic}
 .blog-loading{text-align:center;padding:80px;color:#9A8C7E;font-size:14px;letter-spacing:1px}
-.post-detail{display:none;max-width:720px;margin:0 auto;padding:40px 32px 100px}
+.post-detail{display:none;max-width:720px;margin:0 auto;padding:40px 32px 80px}
 .back-btn{font-size:13px;color:#C17B5A;cursor:pointer;letter-spacing:1px;margin-bottom:40px;display:inline-block;background:none;border:none;font-family:'Jost',sans-serif;text-decoration:none}
 .detail-date{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#9A8C7E;margin-bottom:16px}
 .detail-title{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;line-height:1.15;color:#2C1810;margin-bottom:32px}
 .detail-img{width:100%;max-height:400px;object-fit:cover;border-radius:2px;margin-bottom:40px}
 .detail-body{font-size:16px;line-height:1.95;color:#4A3E35;font-weight:300}
 .detail-body p{margin-bottom:24px}
+.post-subscribe{margin-top:56px;padding-top:40px;border-top:1px solid #E5DDD4}
 @media(max-width:768px){
   .blog-controls{padding:0 16px 24px}
   #search-input{width:100%}
@@ -160,6 +180,21 @@ footer a:hover{color:#FAF7F2}
       <div class="section-tag">Writing</div>
       <div class="section-title">Reflections &amp; Insights</div>
     </div>
+    <div class="subscribe-bar">
+  <div class="subscribe-text">
+    <div class="subscribe-title">Stay in the loop</div>
+    <div class="subscribe-sub">New posts, session updates, and healing insights — direct to your inbox.</div>
+  </div>
+  <div>
+    <div class="subscribe-form" id="sub-form">
+      <input class="subscribe-input" type="email" id="sub-email" placeholder="Your email address">
+      <button class="subscribe-btn" id="sub-btn" onclick="subscribe()">Subscribe</button>
+    </div>
+    <div class="subscribe-status" id="sub-status"></div>
+    <div class="subscribe-success" id="sub-success">Thank you. Sangeeta will be in touch.</div>
+  </div>
+</div>
+    <div style="height:40px"></div>
     <div class="blog-controls">
       <input id="search-input" type="text" placeholder="Search by title, topic or tag..." oninput="filterPosts()">
       <span class="post-count" id="post-count"></span>
@@ -175,6 +210,18 @@ footer a:hover{color:#FAF7F2}
     <img id="detail-img" class="detail-img" src="" alt="" style="display:none">
     <div class="detail-body" id="detail-body"></div>
     <div class="tag-list" id="detail-tags" style="margin-top:40px"></div>
+    <div class="post-subscribe">
+      <div id="sub-form2-wrap">
+        <div class="subscribe-title" style="margin-bottom:6px">Enjoyed this? Stay in the loop.</div>
+        <div class="subscribe-sub" style="margin-bottom:20px">Subscribe for new posts and session updates from Sangeeta.</div>
+        <div class="subscribe-form" id="sub-form2">
+          <input class="subscribe-input" type="email" id="sub-email2" placeholder="Your email address">
+          <button class="subscribe-btn" id="sub-btn2" onclick="subscribe2()">Subscribe</button>
+        </div>
+        <div class="subscribe-status" id="sub-status2"></div>
+      </div>
+      <div class="subscribe-success" id="sub-success2">Thank you. Sangeeta will be in touch.</div>
+    </div>
   </div>
 </div>
 <footer>
@@ -326,6 +373,54 @@ async function deletePost(id){
     if(typeof loadPosts==='function')await loadPosts();
     loadAdminPosts();
   }catch(e){alert('Could not delete. Try again.');}
+}
+
+
+var NEW_SHEET_URL='https://script.google.com/macros/s/AKfycbxUiWBumWjm-MrV-2GNwopGpq8hF9p52krD93Y0PKWWvmEn5k0J5LsTqITFbL7msuqo2Q/exec';
+async function subscribe(){
+  var email=document.getElementById('sub-email').value.trim();
+  if(!email||!email.includes('@')){
+    var st=document.getElementById('sub-status');
+    st.textContent='Please enter a valid email address.';
+    st.style.display='block';
+    return;
+  }
+  var btn=document.getElementById('sub-btn');
+  btn.disabled=true;btn.textContent='Subscribing...';
+  document.getElementById('sub-status').style.display='none';
+  try{
+    await fetch(NEW_SHEET_URL,{method:'POST',mode:'no-cors',body:JSON.stringify({type:'subscribe',email:email})});
+    document.getElementById('sub-form').style.display='none';
+    document.getElementById('sub-success').style.display='block';
+  }catch(e){
+    var st=document.getElementById('sub-status');
+    st.textContent='Something went wrong. Please try again.';
+    st.style.display='block';
+    btn.disabled=false;btn.textContent='Subscribe';
+  }
+}
+
+async function subscribe2(){
+  var email=document.getElementById('sub-email2').value.trim();
+  if(!email||!email.includes('@')){
+    var st=document.getElementById('sub-status2');
+    st.textContent='Please enter a valid email address.';
+    st.style.display='block';
+    return;
+  }
+  var btn=document.getElementById('sub-btn2');
+  btn.disabled=true;btn.textContent='Subscribing...';
+  document.getElementById('sub-status2').style.display='none';
+  try{
+    await fetch(NEW_SHEET_URL,{method:'POST',mode:'no-cors',body:JSON.stringify({type:'subscribe',email:email})});
+    document.getElementById('sub-form2-wrap').style.display='none';
+    document.getElementById('sub-success2').style.display='block';
+  }catch(e){
+    var st=document.getElementById('sub-status2');
+    st.textContent='Something went wrong. Please try again.';
+    st.style.display='block';
+    btn.disabled=false;btn.textContent='Subscribe';
+  }
 }
 
 var allPosts=[];
