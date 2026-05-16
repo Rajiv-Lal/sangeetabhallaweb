@@ -487,42 +487,72 @@ function downloadPDF(){
   var date=document.getElementById('detail-date').textContent;
   var bodyEl=document.getElementById('detail-body');
   var tags=document.getElementById('detail-tags').textContent.trim();
-  var bodyText='';
-  bodyEl.querySelectorAll('p').forEach(function(p){bodyText+=p.textContent+'
-
-'});
-  
-  var content=[
-    'SANGEETA BHALLA',
-    'sangeetabhalla.net',
-    '',
-    '─'.repeat(60),
-    '',
-    title.toUpperCase(),
-    date,
-    '',
-    '─'.repeat(60),
-    '',
-    bodyText.trim(),
-    '',
-    '─'.repeat(60),
-    tags?'Tags: '+tags:'',
-    '',
-    'Sangeeta Bhalla | Energy Healer & Founder',
-    'sangeetabhalla.net | +91 9100972190',
-    'Hyderabad, India',
-    '',
-    '© 2026 Sangeeta Bhalla. All rights reserved.'
-  ].join('
-');
-  
-  var blob=new Blob([content],{type:'text/plain;charset=utf-8'});
+  var paras=[];
+  bodyEl.querySelectorAll('p').forEach(function(p){if(p.textContent.trim())paras.push(p.textContent.trim())});
   var slug=title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
-  var a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download='sangeeta-bhalla-'+slug+'.txt';
-  a.click();
-  URL.revokeObjectURL(a.href);
+  var imgEl=document.getElementById('detail-img');
+  var script=document.createElement('script');
+  script.src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+  script.onload=function(){
+    var doc=new window.jspdf.jsPDF({unit:'mm',format:'a4'});
+    var pw=210,lm=20,rm=20,tm=24,usable=pw-lm-rm;
+    var y=tm;
+    doc.setFontSize(9);doc.setTextColor(193,123,90);
+    doc.text('SANGEETA BHALLA',lm,y);
+    doc.text('sangeetabhalla.net',pw-rm,y,{align:'right'});
+    y+=5;
+    doc.setDrawColor(193,123,90);doc.setLineWidth(0.3);doc.line(lm,y,pw-rm,y);
+    y+=12;
+    doc.setFontSize(22);doc.setTextColor(44,24,16);doc.setFont('helvetica','bold');
+    var titleLines=doc.splitTextToSize(title,usable);
+    doc.text(titleLines,lm,y);
+    y+=titleLines.length*9+2;
+    doc.setFontSize(9);doc.setTextColor(154,140,126);doc.setFont('helvetica','normal');
+    doc.text(date.toUpperCase(),lm,y);
+    y+=8;
+    doc.setDrawColor(220,212,200);doc.setLineWidth(0.2);doc.line(lm,y,pw-rm,y);
+    y+=8;
+    function addBody(){
+      doc.setFontSize(11);doc.setTextColor(74,62,53);doc.setFont('helvetica','normal');
+      paras.forEach(function(para){
+        var lines=doc.splitTextToSize(para,usable);
+        if(y+lines.length*6>280){doc.addPage();y=tm;}
+        doc.text(lines,lm,y);
+        y+=lines.length*6+5;
+      });
+      if(tags){
+        y+=4;if(y>270){doc.addPage();y=tm;}
+        doc.setFontSize(9);doc.setTextColor(193,123,90);
+        doc.text('Tags: '+tags,lm,y);y+=8;
+      }
+      var pages=doc.internal.getNumberOfPages();
+      for(var i=1;i<=pages;i++){
+        doc.setPage(i);
+        doc.setDrawColor(220,212,200);doc.setLineWidth(0.2);doc.line(lm,287,pw-rm,287);
+        doc.setFontSize(8);doc.setTextColor(154,140,126);
+        doc.text('Sangeeta Bhalla | Energy Healer & Founder | sangeetabhalla.net | Hyderabad',lm,292);
+        doc.text(i+' / '+pages,pw-rm,292,{align:'right'});
+      }
+      doc.save('sangeeta-bhalla-'+slug+'.pdf');
+    }
+    if(imgEl&&imgEl.style.display!=='none'&&imgEl.src){
+      var tmpImg=new Image();
+      tmpImg.crossOrigin='anonymous';
+      tmpImg.onload=function(){
+        var canvas=document.createElement('canvas');
+        canvas.width=tmpImg.naturalWidth;canvas.height=tmpImg.naturalHeight;
+        canvas.getContext('2d').drawImage(tmpImg,0,0);
+        var imgData=canvas.toDataURL('image/jpeg',0.85);
+        var imgH=Math.min((tmpImg.naturalHeight/tmpImg.naturalWidth)*usable,80);
+        if(y+imgH>270){doc.addPage();y=tm;}
+        doc.addImage(imgData,'JPEG',lm,y,usable,imgH);
+        y+=imgH+8;addBody();
+      };
+      tmpImg.onerror=function(){addBody()};
+      tmpImg.src=imgEl.src;
+    } else {addBody();}
+  };
+  document.head.appendChild(script);
 }
 
 var params=new URLSearchParams(window.location.search);
