@@ -210,6 +210,13 @@ footer a:hover{color:#FAF7F2}
     <img id="detail-img" class="detail-img" src="" alt="" style="display:none">
     <div class="detail-body" id="detail-body"></div>
     <div class="tag-list" id="detail-tags" style="margin-top:40px"></div>
+    <div style="margin-top:40px;padding-top:32px;border-top:1px solid #E5DDD4;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px">
+      <div>
+        <div style="font-family:Cormorant Garamond,serif;font-size:18px;font-weight:300;color:#2C1810;margin-bottom:4px">Save this post</div>
+        <div style="font-size:13px;color:#8A7C70;font-weight:300">Download as a PDF to read offline or share.</div>
+      </div>
+      <button onclick="downloadPDF()" style="padding:12px 28px;background:#2C1810;color:#FAF7F2;border:none;border-radius:2px;font-family:Jost,sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background 0.2s" onmouseover="this.style.background='#C17B5A'" onmouseout="this.style.background='#2C1810'">Download PDF</button>
+    </div>
     <div class="post-subscribe">
       <div id="sub-form2-wrap">
         <div class="subscribe-title" style="margin-bottom:6px">Enjoyed this? Stay in the loop.</div>
@@ -472,6 +479,50 @@ function loadPost(id){
     document.getElementById('detail-tags').innerHTML=p.tags&&p.tags.length?p.tags.map(function(t){return '<span class="tag">'+t+'</span>'}).join(''):'';
     window.scrollTo(0,0);
   });
+}
+
+
+function downloadPDF(){
+  var title=document.getElementById('detail-title').textContent;
+  var date=document.getElementById('detail-date').textContent;
+  var bodyEl=document.getElementById('detail-body');
+  var tags=document.getElementById('detail-tags').textContent.trim();
+  var bodyText='';
+  bodyEl.querySelectorAll('p').forEach(function(p){bodyText+=p.textContent+'
+
+'});
+  
+  var content=[
+    'SANGEETA BHALLA',
+    'sangeetabhalla.net',
+    '',
+    '─'.repeat(60),
+    '',
+    title.toUpperCase(),
+    date,
+    '',
+    '─'.repeat(60),
+    '',
+    bodyText.trim(),
+    '',
+    '─'.repeat(60),
+    tags?'Tags: '+tags:'',
+    '',
+    'Sangeeta Bhalla | Energy Healer & Founder',
+    'sangeetabhalla.net | +91 9100972190',
+    'Hyderabad, India',
+    '',
+    '© 2026 Sangeeta Bhalla. All rights reserved.'
+  ].join('
+');
+  
+  var blob=new Blob([content],{type:'text/plain;charset=utf-8'});
+  var slug=title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='sangeeta-bhalla-'+slug+'.txt';
+  a.click();
+  URL.revokeObjectURL(a.href);
 }
 
 var params=new URLSearchParams(window.location.search);
