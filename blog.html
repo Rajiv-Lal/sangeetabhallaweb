@@ -487,87 +487,69 @@ function downloadPDF(){
   var date=document.getElementById('detail-date').textContent;
   var bodyEl=document.getElementById('detail-body');
   var tags=document.getElementById('detail-tags').textContent.trim();
-  var paras=[];
-  bodyEl.querySelectorAll('p').forEach(function(p){if(p.textContent.trim())paras.push(p.textContent.trim())});
-  var slug=title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
   var imgEl=document.getElementById('detail-img');
-  var script=document.createElement('script');
-  script.src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
-  script.onload=function(){
-    var doc=new window.jspdf.jsPDF({unit:'mm',format:'a4'});
-    var pw=210,lm=20,rm=20,tm=24,usable=pw-lm-rm;
-    var y=tm;
-    doc.setFontSize(9);doc.setTextColor(193,123,90);
-    doc.text('SANGEETA BHALLA',lm,y);
-    doc.text('sangeetabhalla.net',pw-rm,y,{align:'right'});
-    y+=5;
-    doc.setDrawColor(193,123,90);doc.setLineWidth(0.3);doc.line(lm,y,pw-rm,y);
-    y+=12;
-    doc.setFontSize(22);doc.setTextColor(44,24,16);doc.setFont('helvetica','bold');
-    var titleLines=doc.splitTextToSize(title,usable);
-    doc.text(titleLines,lm,y);
-    y+=titleLines.length*9+2;
-    doc.setFontSize(9);doc.setTextColor(154,140,126);doc.setFont('helvetica','normal');
-    doc.text(date.toUpperCase(),lm,y);
-    y+=8;
-    doc.setDrawColor(220,212,200);doc.setLineWidth(0.2);doc.line(lm,y,pw-rm,y);
-    y+=8;
-    function addBody(){
-      doc.setFontSize(11);doc.setTextColor(74,62,53);doc.setFont('helvetica','normal');
-      paras.forEach(function(para){
-        var clean=para.replace(/\n/g,' ').replace(/\s+/g,' ').trim();
-        if(!clean)return;
-        var lines=doc.splitTextToSize(clean,usable);
-        var needed=lines.length*6+5;
-        if(y+needed>278){doc.addPage();y=tm;}
-        doc.text(lines,lm,y);
-        y+=needed;
-      });
-      if(tags){
-        y+=4;
-        if(y>272){doc.addPage();y=tm;}
-        doc.setFontSize(9);doc.setTextColor(193,123,90);
-        doc.text('Tags: '+tags.replace(/\n/g,' '),lm,y);
-        y+=8;
-      }
-      var pages=doc.internal.getNumberOfPages();
-      for(var i=1;i<=pages;i++){
-        doc.setPage(i);
-        doc.setDrawColor(220,212,200);doc.setLineWidth(0.2);doc.line(lm,287,pw-rm,287);
-        doc.setFontSize(8);doc.setTextColor(154,140,126);
-        doc.text('Sangeeta Bhalla | Energy Healer & Founder | sangeetabhalla.net | Hyderabad',lm,292);
-        doc.text(i+' / '+pages,pw-rm,292,{align:'right'});
-      }
-      doc.save('sangeeta-bhalla-'+slug+'.pdf');
-    }
-    if(imgEl&&imgEl.style.display!=='none'&&imgEl.src){
-      var tmpImg=new Image();
-      tmpImg.crossOrigin='anonymous';
-      tmpImg.onload=function(){
-        var ratio=tmpImg.naturalWidth/tmpImg.naturalHeight;
-        var maxH=45,imgW,imgH;
-        if(ratio>=1){imgW=usable;imgH=imgW/ratio;if(imgH>maxH){imgH=maxH;imgW=imgH*ratio;}}
-        else{imgH=maxH;imgW=imgH*ratio;if(imgW>usable){imgW=usable;imgH=imgW/ratio;}}
-        imgW=Math.min(imgW,usable);
-        var targetW=Math.round(600);
-        var targetH=Math.round(600/ratio);
-        var small=document.createElement('canvas');
-        small.width=targetW;small.height=targetH;
-        small.getContext('2d').drawImage(tmpImg,0,0,targetW,targetH);
-        var imgData=small.toDataURL('image/jpeg',0.82);
-        var xOff=lm+(usable-imgW)/2;
-        var pgBefore=doc.internal.getNumberOfPages();
-        doc.addImage(imgData,'JPEG',xOff,y,imgW,imgH);
-        if(doc.internal.getNumberOfPages()>pgBefore){doc.setPage(pgBefore);}
-        y+=imgH+6;
-        addBody();
-      };
-      tmpImg.onerror=function(){addBody()};
-      tmpImg.src=imgEl.src;
-    } else {addBody();}
+  var imgHtml='';
+  if(imgEl&&imgEl.style.display!=='none'&&imgEl.src){
+    imgHtml='<img src="'+imgEl.src+'" style="max-width:100%;height:auto;display:block;margin:24px auto;">';
+  }
+  var bodyHtml=bodyEl.innerHTML;
+  var tagHtml=tags?'<div class="tags">'+tags+'</div>':'';
+
+  var win=window.open('','_blank');
+  win.document.write(`<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>`+title+`</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@300;400&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Jost',sans-serif;color:#2C1810;background:#fff;padding:0}
+  .page{max-width:680px;margin:0 auto;padding:40px 48px 60px}
+  .header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #C17B5A}
+  .header-name{font-family:'Cormorant Garamond',serif;font-size:14px;color:#C17B5A;letter-spacing:1px}
+  .header-url{font-size:11px;color:#C17B5A;letter-spacing:1px}
+  h1{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;line-height:1.15;color:#2C1810;margin:28px 0 10px}
+  .date{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#9A8C7E;margin-bottom:20px}
+  .divider{height:1px;background:#E5DDD4;margin-bottom:24px}
+  .post-image{max-width:100%;height:auto;display:block;margin:0 auto 28px}
+  .body p{font-size:14px;line-height:1.9;color:#4A3E35;font-weight:300;margin-bottom:18px}
+  .tags{font-size:11px;color:#C17B5A;letter-spacing:1px;margin-top:32px;padding-top:20px;border-top:1px solid #E5DDD4}
+  .footer{margin-top:40px;padding-top:16px;border-top:1px solid #E5DDD4;display:flex;justify-content:space-between;font-size:11px;color:#9A8C7E;letter-spacing:0.5px}
+  @media print{
+    body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .page{padding:20px 32px 40px}
+    h1{font-size:28px}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <span class="header-name">Sangeeta Bhalla</span>
+    <span class="header-url">sangeetabhalla.net</span>
+  </div>
+  <h1>`+title+`</h1>
+  <div class="date">`+date+`</div>
+  <div class="divider"></div>
+  `+imgHtml+`
+  <div class="body">`+bodyHtml+`</div>
+  `+tagHtml+`
+  <div class="footer">
+    <span>Sangeeta Bhalla &nbsp;|&nbsp; Energy Healer &amp; Founder &nbsp;|&nbsp; Hyderabad</span>
+    <span>sangeetabhalla.net</span>
+  </div>
+</div>
+<script>
+  window.onload=function(){
+    setTimeout(function(){window.print()},800);
   };
-  document.head.appendChild(script);
+</script>
+</body>
+</html>`);
+  win.document.close();
 }
+
 
 var params=new URLSearchParams(window.location.search);
 var postId=params.get('post');
