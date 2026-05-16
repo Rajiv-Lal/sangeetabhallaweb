@@ -543,10 +543,9 @@ function downloadPDF(){
         canvas.width=tmpImg.naturalWidth;canvas.height=tmpImg.naturalHeight;
         canvas.getContext('2d').drawImage(tmpImg,0,0);
         var imgData=canvas.toDataURL('image/jpeg',0.85);
-        var imgH=Math.min((tmpImg.naturalHeight/tmpImg.naturalWidth)*usable,80);
-        if(y+imgH>270){doc.addPage();y=tm;}
+        var imgH=Math.min((tmpImg.naturalHeight/tmpImg.naturalWidth)*usable,55);
         doc.addImage(imgData,'JPEG',lm,y,usable,imgH);
-        y+=imgH+8;addBody();
+        y+=imgH+6;addBody();
       };
       tmpImg.onerror=function(){addBody()};
       tmpImg.src=imgEl.src;
