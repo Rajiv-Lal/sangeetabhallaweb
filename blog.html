@@ -544,17 +544,21 @@ function downloadPDF(){
       var tmpImg=new Image();
       tmpImg.crossOrigin='anonymous';
       tmpImg.onload=function(){
-        var canvas=document.createElement('canvas');
-        canvas.width=tmpImg.naturalWidth;canvas.height=tmpImg.naturalHeight;
-        canvas.getContext('2d').drawImage(tmpImg,0,0);
-        var imgData=canvas.toDataURL('image/jpeg',0.85);
         var ratio=tmpImg.naturalWidth/tmpImg.naturalHeight;
         var maxH=45,imgW,imgH;
         if(ratio>=1){imgW=usable;imgH=imgW/ratio;if(imgH>maxH){imgH=maxH;imgW=imgH*ratio;}}
         else{imgH=maxH;imgW=imgH*ratio;if(imgW>usable){imgW=usable;imgH=imgW/ratio;}}
         imgW=Math.min(imgW,usable);
+        var targetW=Math.round(600);
+        var targetH=Math.round(600/ratio);
+        var small=document.createElement('canvas');
+        small.width=targetW;small.height=targetH;
+        small.getContext('2d').drawImage(tmpImg,0,0,targetW,targetH);
+        var imgData=small.toDataURL('image/jpeg',0.82);
         var xOff=lm+(usable-imgW)/2;
+        var pgBefore=doc.internal.getNumberOfPages();
         doc.addImage(imgData,'JPEG',xOff,y,imgW,imgH);
+        if(doc.internal.getNumberOfPages()>pgBefore){doc.setPage(pgBefore);}
         y+=imgH+6;
         addBody();
       };
