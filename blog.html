@@ -483,71 +483,81 @@ function loadPost(id){
 
 
 function downloadPDF(){
+  var btn=document.querySelector('[onclick="downloadPDF()"]');
+  if(btn){btn.disabled=true;btn.textContent='Generating PDF...';}
+
   var title=document.getElementById('detail-title').textContent;
   var date=document.getElementById('detail-date').textContent;
-  var bodyEl=document.getElementById('detail-body');
-  var tags=document.getElementById('detail-tags').textContent.trim();
+  var slug=title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
   var imgEl=document.getElementById('detail-img');
-  var imgHtml='';
-  if(imgEl&&imgEl.style.display!=='none'&&imgEl.src){
-    imgHtml='<img src="'+imgEl.src+'" style="max-width:100%;height:auto;display:block;margin:24px auto;">';
-  }
-  var bodyHtml=bodyEl.innerHTML;
-  var tagHtml=tags?'<div class="tags">'+tags+'</div>':'';
+  var imgHtml=imgEl&&imgEl.style.display!=='none'&&imgEl.src
+    ?'<img src="'+imgEl.src+'" crossorigin="anonymous" style="max-width:100%;height:auto;display:block;margin:0 auto 24px;">'
+    :'';
 
-  var win=window.open('','_blank');
-  win.document.write(`<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>`+title+`</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@300;400&display=swap');
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Jost',sans-serif;color:#2C1810;background:#fff;padding:0}
-  .page{max-width:680px;margin:0 auto;padding:40px 48px 60px}
-  .header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #C17B5A}
-  .header-name{font-family:'Cormorant Garamond',serif;font-size:14px;color:#C17B5A;letter-spacing:1px}
-  .header-url{font-size:11px;color:#C17B5A;letter-spacing:1px}
-  h1{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;line-height:1.15;color:#2C1810;margin:28px 0 10px}
-  .date{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#9A8C7E;margin-bottom:20px}
-  .divider{height:1px;background:#E5DDD4;margin-bottom:24px}
-  .post-image{max-width:100%;height:auto;display:block;margin:0 auto 28px}
-  .body p{font-size:14px;line-height:1.9;color:#4A3E35;font-weight:300;margin-bottom:18px}
-  .tags{font-size:11px;color:#C17B5A;letter-spacing:1px;margin-top:32px;padding-top:20px;border-top:1px solid #E5DDD4}
-  .footer{margin-top:40px;padding-top:16px;border-top:1px solid #E5DDD4;display:flex;justify-content:space-between;font-size:11px;color:#9A8C7E;letter-spacing:0.5px}
-  @media print{
-    body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-    .page{padding:20px 32px 40px}
-    h1{font-size:28px}
-  }
-</style>
-</head>
-<body>
-<div class="page">
-  <div class="header">
-    <span class="header-name">Sangeeta Bhalla</span>
-    <span class="header-url">sangeetabhalla.net</span>
-  </div>
-  <h1>`+title+`</h1>
-  <div class="date">`+date+`</div>
-  <div class="divider"></div>
-  `+imgHtml+`
-  <div class="body">`+bodyHtml+`</div>
-  `+tagHtml+`
-  <div class="footer">
-    <span>Sangeeta Bhalla &nbsp;|&nbsp; Energy Healer &amp; Founder &nbsp;|&nbsp; Hyderabad</span>
-    <span>sangeetabhalla.net</span>
-  </div>
-</div>
-<script>
-  window.onload=function(){
-    setTimeout(function(){window.print()},800);
+  var container=document.createElement('div');
+  container.style.cssText='position:fixed;left:-9999px;top:0;width:680px;background:#fff;padding:40px 48px 60px;font-family:Georgia,serif;color:#2C1810;';
+  container.innerHTML=`
+    <div style="display:flex;justify-content:space-between;border-bottom:1.5px solid #C17B5A;padding-bottom:8px;margin-bottom:0">
+      <span style="font-size:13px;color:#C17B5A;letter-spacing:1px">SANGEETA BHALLA</span>
+      <span style="font-size:11px;color:#C17B5A;letter-spacing:1px">sangeetabhalla.net</span>
+    </div>
+    <h1 style="font-size:32px;font-weight:normal;line-height:1.2;margin:24px 0 8px;color:#2C1810">`+title+`</h1>
+    <div style="font-size:11px;letter-spacing:2px;color:#9A8C7E;margin-bottom:20px;text-transform:uppercase">`+date+`</div>
+    <div style="height:1px;background:#E5DDD4;margin-bottom:24px"></div>
+    `+imgHtml+`
+    <div id="pdf-body" style="font-size:14px;line-height:1.85;color:#4A3E35;font-weight:normal">`+document.getElementById('detail-body').innerHTML+`</div>
+    <div style="margin-top:36px;padding-top:16px;border-top:1px solid #E5DDD4;display:flex;justify-content:space-between;font-size:10px;color:#9A8C7E;letter-spacing:0.5px">
+      <span>Sangeeta Bhalla &nbsp;|&nbsp; Energy Healer &amp; Founder &nbsp;|&nbsp; Hyderabad</span>
+      <span>sangeetabhalla.net</span>
+    </div>`;
+  document.body.appendChild(container);
+
+  var s1=document.createElement('script');
+  s1.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+  s1.onload=function(){
+    var s2=document.createElement('script');
+    s2.src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+    s2.onload=function(){
+      html2canvas(container,{
+        scale:2,
+        useCORS:true,
+        allowTaint:false,
+        backgroundColor:'#ffffff',
+        logging:false,
+        width:680,
+        windowWidth:680
+      }).then(function(canvas){
+        var imgData=canvas.toDataURL('image/jpeg',0.92);
+        var doc=new window.jspdf.jsPDF({unit:'mm',format:'a4',orientation:'portrait'});
+        var pw=210,ph=297,lm=15,rm=15,tm=15,bm=15;
+        var usableW=pw-lm-rm;
+        var canvasAspect=canvas.height/canvas.width;
+        var totalHeight=usableW*canvasAspect;
+        var pageH=ph-tm-bm;
+        var pages=Math.ceil(totalHeight/pageH);
+        for(var i=0;i<pages;i++){
+          if(i>0)doc.addPage();
+          var srcY=(i*pageH/totalHeight)*canvas.height;
+          var srcH=(pageH/totalHeight)*canvas.height;
+          var sliceCanvas=document.createElement('canvas');
+          sliceCanvas.width=canvas.width;
+          sliceCanvas.height=Math.min(srcH,canvas.height-srcY);
+          sliceCanvas.getContext('2d').drawImage(canvas,0,srcY,canvas.width,sliceCanvas.height,0,0,canvas.width,sliceCanvas.height);
+          var sliceData=sliceCanvas.toDataURL('image/jpeg',0.92);
+          var sliceH=(sliceCanvas.height/canvas.height)*totalHeight;
+          doc.addImage(sliceData,'JPEG',lm,tm,usableW,sliceH);
+        }
+        doc.save('sangeeta-bhalla-'+slug+'.pdf');
+        document.body.removeChild(container);
+        if(btn){btn.disabled=false;btn.textContent='Download PDF';}
+      }).catch(function(){
+        document.body.removeChild(container);
+        if(btn){btn.disabled=false;btn.textContent='Download PDF';}
+      });
+    };
+    document.head.appendChild(s2);
   };
-</script>
-</body>
-</html>`);
-  win.document.close();
+  document.head.appendChild(s1);
 }
 
 
